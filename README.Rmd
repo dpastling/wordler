@@ -1,5 +1,10 @@
+---
+output: github_document
+---
 
 # wordler
+
+## Overview
 
 An R package for optimizing your wordle guesses
 
@@ -7,8 +12,13 @@ An R package for optimizing your wordle guesses
 
 From an R session:
 
-```
-install_github("dpastling/wordler")
+```{r, eval=FALSE}
+# The easiest way is to install from GitHub:
+# install.packages("devtools")
+devtools::install_github("dpastling/wordler")
+
+# or clone this repo and install locally
+# devtools::load_all("path/to/wordler/")
 ```
 
 

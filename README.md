@@ -1,0 +1,118 @@
+
+# Wordle Hacking
+
+## Step 1: Choose your first word
+
+`x <- load_dictionary()`
+
+This function grabs the system dictionary in `/usr/share/dict/words` and restricts
+the list to five letter words.
+
+`count_letters()` gives the frequency of letters that occur at least once in
+each word. You can use this letter count to select a word that is likely to eliminate.
+Note that in a word like 'doors' the o will be counted once.
+
+```
+> count_letters(x)
+
+   s    e    a    o    r    i    l    t    n    d    u    c    p    y 
+4470 4419 3797 2834 2808 2518 2355 2240 1936 1666 1621 1432 1341 1328 
+   m    h    g    b    k    f    w    v    z    x    j    q 
+1277 1166 1057 1023  904  762  675  460  226  196  170   74 
+```
+
+One strategy would be to guess a word with common letters, rather than wasting
+a turn with rare letters.
+
+Here's how you would select words that have the most vowels
+
+```
+> rank_words_count(x, "aeiou") |> head(n = 10)
+   words stat
+1  adieu    4
+2  audio    4
+3  aurei    4
+4  louie    4
+5  miaou    4
+6  ourie    4
+7  uraei    4
+8  abide    3
+9  abode    3
+10 aboil    3
+```
+
+Here you can see why "adieu" is one of the most common first guesses because it
+contains 4 vowels. Another option is "audio" which is also has 4 vowels, but 
+doesn't include the letter "e" which is more common than "o".
+
+
+Another strategy is to choose words based on their frequency in dictionary
+
+```
+> rank_words_weight(x) |> head(n = 10)
+   words      stat
+1  arose 0.4286750
+2  arise 0.4212841
+3  raise 0.4212841
+4  serai 0.4212841
+5  aloes 0.4180798
+6  arles 0.4174716
+7  earls 0.4174716
+8  lares 0.4174716
+9  laser 0.4174716
+10 lears 0.4174716
+```
+
+Here you can see that "arose" is a good first guess because all of the letters
+are in the top 5. "laser" is another fun one. The letter "l" is not as common as
+the others, but is still in the top 10.
+
+
+## Step 2: Filter the list of words given clues from your guess
+
+screenshot here
+
+```
+x <- include_letters(x, "asdf") |> 
+     exclude_letters("asdf") |> 
+     regex_filter("^.a[^t]")
+```
+
+explanation here
+
+
+## Step 3: Carefully choose your next word
+
+You can rank the remaining options
+
+Or consider the following situation
+
+```
+> x
+[1] "eight" "fight" "light" "night" "right" "sight"
+```
+
+It may take several guesses to find the correct word. A good strategy here
+is to guess a word that contains all the first letters to more quickly narrow 
+down your list of options.
+
+```
+> rank_words_count(load_dictionary(), "eflnrs") |> head()
+  words stat
+1 ferns    5
+2 alefs    4
+3 arles    4
+4 brens    4
+5 clefs    4
+6 delfs    4
+```
+
+Here guessing "ferns" would narrow down your list of options so that you will be
+guaranteed to get it on the next try. "kl"
+
+
+AUDIO
+TRIES
+SHIFT
+STING
+

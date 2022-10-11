@@ -6,7 +6,9 @@ output: github_document
 
 ## Overview
 
-An R package for optimizing your wordle guesses
+An R package for optimizing your wordle guesses. Isn't this cheating? Yes, absolutely!
+But wordler has been a fun coding project and a way to think more deeply about 
+various strategies.
 
 ## Installation
 

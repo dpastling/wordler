@@ -1,15 +1,18 @@
 
+#' Load a word list from a disctionary
+#'
+#' @description
+#' Loads a list of words from the unix file '/usr/share/dict/words' and filters
+#' to words with 5 letters.
+#'
+#' @param file The file path to a dictionary file. Defaults to /usr/share/dict/words
+#'
+#' @return A character vector of words loaded from the file
 #' @export
-load_dictionary <- function() {
-  read.delim("/usr/share/dict/words", col.names = "words") |>
-  #read.delim("ospd.txt", col.names = "words") |>
-    dplyr::filter(
-      nchar(words) == 5,
-      grepl("^[a-z]{5}$", words)
-    ) |>
-    purrr::pluck("words")
+#'
+#' @examples
+load_dictionary <- function(file = "/usr/share/dict/words") {
+  words <- readLines(file)
+  words[grepl("^[a-z]{5}$", words)]
 }
-
-# idea: could be extended to filter dictionary based on usage
-#       or load a corpus that has already been curated
 

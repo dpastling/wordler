@@ -1,5 +1,5 @@
 
-# wordler
+# wordleR
 
 An R package for optimizing your wordle guesses
 

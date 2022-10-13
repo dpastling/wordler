@@ -1,9 +1,9 @@
-Package: wordlehack
+Package: wordler
 Title: Optimize Wordle Guesses
-Version: 0.0.0.9000
+Version: 0.0.1.0000
 Authors@R: 
-    person("David", "Astling", "dpastling@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+    person("David", "Astling", , "dpastling@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-8179-0304"))
 Description: Generates basic stats such as frequency of letters and clustering
     of related words. The dictionary can be reduced using helper functions to
     remove/retain words containing letters based on previous guesses (yellow/green/grey).
@@ -11,3 +11,6 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.0
+Depends: 
+    R (>= 2.10)
+LazyData: true

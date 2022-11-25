@@ -1,5 +1,64 @@
 
 
+
+
+#' Filter dictionary after a wordle guess
+#'
+#' Filter the list of possible words after a wordle guess using the combination
+#' of grey, yellow, and green letters.
+#' @param guess a string with the guessed word
+#' @param pattern a string of letters with "g" for perfect green matches, "y" for
+#' partial yellow matches, and "x" for grey non-matching letters.
+#' @param dictionary a character vector of possible words remaining in the
+#' dictionary
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' remaining_words <- c("sedan", "sepia", "sneak", "speak")
+#'
+#' # We guess 'sepia' and get back the following pattern:
+#' #   green, yellow, yellow, grey, yellow
+#'
+#' filter_dictionary("sepia", "gyyxy", remaining_words)
+#'
+#' # The only word left is 'speak'
+filter_dictionary <- function(guess, pattern, dictionary) {
+  if (pattern == "ggggg") return(guess)
+  guess <- strsplit(guess, "") |> unlist()
+  pattern <- strsplit(pattern, "") |> unlist()
+  stopifnot(all(pattern %in% c("g", "y", "x")))
+  grey_letters     <- guess[pattern %in% "x"] |> unique()
+  matching_letters <- guess[! pattern %in% "x"] |> unique()
+  # deal with multiple letters in guess, one colored the other grey
+  if (length(grey_letters) > 0 & length(matching_letters) > 0) {
+    grey_letters <- grey_letters[! grey_letters %in% matching_letters]
+  }
+  position_regex <- rep(".", 5)
+  for (i in seq_along(pattern)) {
+    if (pattern[i] == "g")  {
+      position_regex[i]  <- guess[i]
+    } else {
+      position_regex[i] <- paste0("[^", guess[i], "]")
+    }
+  }
+  position_regex  <- paste(position_regex, collapse = "")
+  if (length(grey_letters) > 0) {
+    dictionary <- exclude_letters(dictionary, grey_letters)
+  }
+  if (length(matching_letters) > 0) {
+    dictionary <- include_letters(dictionary, matching_letters)
+  }
+  if (position_regex != ".....") {
+    dictionary <- regex_filter(dictionary, position_regex)
+  }
+  dictionary
+}
+
+
+
+
 #' Filter word list by matching letters
 #'
 #' @description

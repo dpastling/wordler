@@ -10,7 +10,7 @@ Description: Generates basic stats such as frequency of letters and clustering
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.0
+RoxygenNote: 7.2.1
 Depends: 
     R (>= 2.10)
 LazyData: true
